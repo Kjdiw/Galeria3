@@ -26,24 +26,24 @@ public class PhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photo);
 
         Toolbar toolbar = findViewById(R.id.tbPhoto);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);//pega a action bar
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);//habilita o retorno ao main activity
 
         Intent i = getIntent();
-        photoPath = i.getStringExtra("photo_path");
+        photoPath = i.getStringExtra("photo_path");//pega o caminho da foto na main activity
 
         Bitmap bitmap = Util.getBitmap(photoPath);
         ImageView imPhoto = findViewById(R.id.imPhoto);
-        imPhoto.setImageBitmap(bitmap);
+        imPhoto.setImageBitmap(bitmap);//pega o bitmap e coloca no image view
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.photo_activity_tb, menu);
-        return true;
+        return true;//faz o xml menu ficar em cima
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -52,7 +52,7 @@ public class PhotoActivity extends AppCompatActivity {
                 sharePhoto();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);//ao clicar no ícone aciona o compartilhamento da foto
         }
     }
 

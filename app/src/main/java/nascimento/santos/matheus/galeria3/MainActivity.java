@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);//acessa o diretório
         File[] files = dir.listFiles();
         for(int i = 0; i< files.length; i++) {
             photos.add(files[i].getAbsolutePath());
-        }
+        }//abre a lista de fotos salvas e adiciona a nova foto
 
-        mainAdapter = new MainAdapter(MainActivity.this, photos);
+        mainAdapter = new MainAdapter(MainActivity.this, photos);//cria o mainadapter
 
 
         List<String> permissions = new ArrayList<>();
@@ -64,28 +64,28 @@ public class MainActivity extends AppCompatActivity {
         checkForPermissions(permissions);
 
         RecyclerView rvGallery = findViewById(R.id.rvGallery);
-        rvGallery.setAdapter(mainAdapter);
+        rvGallery.setAdapter(mainAdapter);//bota o mainadapter no recycleview
 
         float w = getResources().getDimension(R.dimen.itemWidth);
-        int numberOfColumns = Util.calculateNoOfColumns(MainActivity.this, w);
+        int numberOfColumns = Util.calculateNoOfColumns(MainActivity.this, w);//calcula a quantidade de colunas no celular
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, numberOfColumns);
-        rvGallery.setLayoutManager(gridLayoutManager);
+        rvGallery.setLayoutManager(gridLayoutManager);//define o recycleview para respeitar a quantidade de colunas que cabem no celular e define display grid
 
         Toolbar toolbar = findViewById(R.id.tbMain);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);//pega a toolbar e define como interativa
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_tb, menu);
-        return true;
+        return true;//faz o xml menu ficar em cima
     }
 
     public void startPhotoActivity(String photoPath) {
         Intent i = new Intent(MainActivity.this, PhotoActivity.class);
         i.putExtra("photo_path", photoPath);
-        startActivity(i);
+        startActivity(i);//passa o caminho da foto para photo activity
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 dispatchTakePictureIntent();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);//ao clicar no ícone aciona a câmera do celular
         }
     }
 
@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             Toast.makeText(MainActivity.this, "Não foi possível criar o arquivo", Toast.LENGTH_LONG).show();
             return;
-        }
+        }//tenta criar um arquivo vazio para guardar a imagem dentro da pasta de imagens
 
-        currentPhotoPath = f.getAbsolutePath();
+        currentPhotoPath = f.getAbsolutePath();//cria o local do arquivo
 
         if(f != null) {
             Uri fUri = FileProvider.getUriForFile(MainActivity.this, "nascimento.santos.matheus.galeria3.fileprovider", f);
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra(MediaStore.EXTRA_OUTPUT, fUri);
             startActivityForResult(i, RESULT_TAKE_PICTURE);
         }
-    }
+    }//passa a uri da foto e inicia a camera
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File f = File.createTempFile(imageFileName, ".jpg", storageDir);
         return f;
-    }
+    }//cria o arquivo com nome da data e hora da criação
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
