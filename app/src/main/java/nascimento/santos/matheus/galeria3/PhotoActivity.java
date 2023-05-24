@@ -62,5 +62,5 @@ public class PhotoActivity extends AppCompatActivity {
         i.putExtra(Intent.EXTRA_STREAM, photoUri);
         i.setType("image/jpeg");
         startActivity(i);
-    }
+    }//cria uma uri para a foto, cria a intent de mandar ela para algum aplicativo que aceite, informa o tipo de arquivo a enviar e mostra em quais aplicativos o usuário pode compartilhar
 }

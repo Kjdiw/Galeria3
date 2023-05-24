@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> permissions = new ArrayList<>();
         permissions.add(Manifest.permission.CAMERA);
 
-        checkForPermissions(permissions);
+        checkForPermissions(permissions);//cria uma lista com as permissões pedidas, adiciona a câmera a essa lista e verifica as permissões
 
         RecyclerView rvGallery = findViewById(R.id.rvGallery);
         rvGallery.setAdapter(mainAdapter);//bota o mainadapter no recycleview
@@ -131,11 +131,11 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK) {
                 photos.add(currentPhotoPath);
                 mainAdapter.notifyItemInserted(photos.size()-1);
-            }
+            }//ve se a foto foi tirada, adiciona na lista de fotos e avisa o main adapter disso para atualizar o recycle view
             else {
                 File f = new File(currentPhotoPath);
                 f.delete();
-            }
+            }//se a foto não foi tirada é excluído o arquivo em que ela iria ficar
         }
     }
 
@@ -145,12 +145,12 @@ public class MainActivity extends AppCompatActivity {
         for(String permission : permissions) {
             if (!hasPermission(permission)) {
                 permissionsNotGranted.add(permission);
-            }
+            }//cria uma lista de permissões, le elas e adiciona a uma lista de permissões não dadas se for o caso
         }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if(permissionsNotGranted.size()>0) {
                 requestPermissions(permissionsNotGranted.toArray(new String[permissionsNotGranted.size()]), RESULT_REQUEST_PERMISSION);
-            }
+            }//pede a permissão que estiver na lista de permissões não dadas
         }
     }
 
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             return ActivityCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_GRANTED;
         }
         return false;
-    }
+    }//verifica se a permissão já foi dada ou não
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                     permissionsRejected.add(permission);
                 }
             }
-        }
+        }//verifica as permissões após negar ou aceitar ela
         if(permissionsRejected.size() > 0) {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if(shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                             requestPermissions(permissionsRejected.toArray(new String[permissionsRejected.size()]), RESULT_REQUEST_PERMISSION);
                         }
                     } ).create().show();
-                }
+                }//vê se alguma permissão neessária para o aplicativo foi negada, informa isso ao usuário e pede permissão a ele de novo
             }
         }
     }
